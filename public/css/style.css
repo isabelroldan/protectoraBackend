@@ -1,0 +1,457 @@
+
+/* Menú */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eaeaea;
+}
+
+nav div {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2rem;
+    color: #FFC382;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000; /* Color negro por defecto */
+}
+
+nav ul li a:hover {
+    color: #FFC382; /* Color de hover */
+}
+
+nav ul li a.active {
+    color: #FFC382; /* Color de la opción activa */
+}
+
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #444;
+}
+
+/* Contenedor de Mascotas */
+.mascotas-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Tarjeta de Mascotas */
+.mascota-card {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #FFC382; /* Borde del rectángulo */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 20px;
+    width: 100%;
+    max-width: 600px; /* Máximo ancho de cada tarjeta */
+}
+
+/* Imagen de Mascotas */
+.mascota-img-container {
+    flex-shrink: 0; /* Evita que la imagen se reduzca */
+}
+
+.mascota-img {
+    width: 120px; /* Tamaño fijo de la imagen */
+    height: 120px; /* Tamaño fijo de la imagen */
+    object-fit: cover; /* Asegura que la imagen mantenga su proporción */
+    border-radius: 50%; /* Hace la imagen redonda */
+    border: 3px solid #FFC382; /* Borde alrededor de la imagen */
+}
+
+/* Información */
+.mascota-info {
+    margin-left: 20px; /* Espaciado entre imagen y texto */
+}
+
+.mascota-info h2 {
+    font-size: 1.5rem;
+    color: #FFC382; /* Color destacado para el nombre */
+}
+
+.mascota-info p {
+    margin: 5px 0;
+}
+
+/* Acciones */
+.acciones {
+    margin-top: 15px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-ver {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-editar {
+    background-color: #ffc107;
+}
+
+.btn-borrar {
+    background-color: #dc3545;
+}
+
+
+/* Contenedor del Formulario */
+.form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos del Formulario */
+.form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.form input,
+.form textarea,
+.form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+    outline: none;
+    border-color: #FFC382; /* Color destacado */
+}
+
+textarea {
+    resize: none; /* Evita redimensionar el textarea */
+}
+
+/* Botón de Enviar */
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #FFC382;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #e6a96d; /* Color más oscuro al pasar el cursor */
+}
+
+/* Mensajes de Error */
+.error {
+    color: red;
+    font-size: 0.9rem;
+}
+
+/* Contenedor del Detalle */
+.detalle-mascota-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+/* Tarjeta del Detalle */
+.detalle-mascota-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen */
+.detalle-mascota-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #FFC382;
+}
+
+/* Información */
+.detalle-mascota-info {
+    margin-left: 20px;
+    text-align: left;
+}
+
+.detalle-mascota-info h2 {
+    font-size: 2rem;
+    color: #FFC382; /* Color destacado para el nombre */
+}
+
+.detalle-mascota-info p {
+    margin: 5px 0;
+}
+
+/* Botón Volver */
+.btn-volver {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FFC382;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn-volver:hover {
+    background-color: #e6a96d; /* Color más oscuro al pasar el cursor */
+}
+
+
+/* Contenedor del Formulario */
+.form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos del Formulario */
+.form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.form input,
+.form textarea,
+.form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+    outline: none;
+    border-color: #FFC382; /* Color destacado */
+}
+
+textarea {
+    resize: none; /* Evita redimensionar el textarea */
+}
+
+/* Botón de Enviar */
+/*.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #FFC382;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}*/
+
+/*.btn-submit:hover {
+    background-color: #e6a96d; 
+}*/
+
+/* Mensajes de Error */
+.error {
+    color: red;
+    font-size: 0.9rem;
+}
+
+/* Botón Volver */
+.btn-volver {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FFC382;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn-volver:hover {
+    background-color: #e6a96d; /* Color más oscuro al pasar el cursor */
+}
+
+
+/* Contenedor de Usuarios */
+.usuarios-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Tarjeta del Usuario */
+.usuario-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px; /* Máximo ancho */
+}
+
+/* Imagen del Usuario */
+.usuario-img-container {
+    flex-shrink: 0; /* Evita que la imagen se reduzca */
+}
+
+.usuario-img {
+    width: 120px; /* Tamaño fijo */
+    height: 120px; /* Tamaño fijo */
+    object-fit: cover;
+    border-radius: 50%; /* Imagen redonda */
+    border: 3px solid #FFC382; /* Borde alrededor */
+}
+
+/* Información del Usuario */
+.usuario-info {
+    margin-left: 20px;
+}
+
+.usuario-info h2 {
+    font-size: 1.5rem;
+    color: #FFC382; /* Color destacado */
+}
+
+.usuario-info p {
+    margin: 5px 0;
+}
+
+/* Contenedor del Detalle */
+.detalle-usuario-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+/* Tarjeta del Detalle */
+.detalle-usuario-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen */
+.detalle-usuario-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #FFC382;
+}
+
+/* Información */
+.detalle-usuario-info {
+    margin-left: 20px;
+    text-align: left;
+}
+
+.detalle-usuario-info h2 {
+    font-size: 2rem;
+    color: #FFC382; /* Color destacado */
+}
+
+.detalle-usuario-info p {
+    margin: 5px 0;
+}
+
+
+/* Contenedor del Detalle */
+.detalle-solicitud-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+/* Tarjeta del Detalle */
+.detalle-solicitud-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #FFC382;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Información */
+.detalle-solicitud-info {
+    margin-left: 20px;
+    text-align: left;
+}
+
+.detalle-solicitud-info h2 {
+    font-size: 2rem;
+    color: #FFC382; /* Color destacado */
+}
+
+.detalle-solicitud-info p {
+    margin: 5px 0;
+}
+
