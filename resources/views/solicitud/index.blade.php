@@ -23,7 +23,7 @@
         <div class="usuario-card">
             <div class="usuario-info">
                 <h2>Solicitud #{{ $solicitud->id }}</h2>
-                <p><strong>Usuario:</strong> {{ $solicitud->usuario?->nombre ?? 'Usuario no disponible' }}</p>
+                <p><strong>Usuario:</strong> {{ $solicitud->usuario?->name ?? 'Usuario no disponible' }}</p>
                 <p><strong>Mascota:</strong> {{ $solicitud->mascota->nombre }}</p>
                 <p><strong>Fecha:</strong> {{ \Carbon\Carbon::parse($solicitud->fecha_solicitud)->format('d/m/Y') }}</p>
                 <p><strong>Estado:</strong> {{ ucfirst($solicitud->estado) }}</p>

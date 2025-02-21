@@ -69,9 +69,9 @@
             @csrf
 
             <!-- Nombre -->
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="{{ $usuario->nombre }}">
-            @error('nombre')
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" value="{{ $usuario->name }}">
+            @error('name')
                 <span class="error">{{ $message }}</span>
             @enderror
 
@@ -79,6 +79,12 @@
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="{{ $usuario->email }}">
             @error('email')
+                <span class="error">{{ $message }}</span>
+            @enderror
+
+            <label for="password">Contraseña:</label>
+            <input type="text" id="password" name="password" value="{{ old('password') }}">
+            @error('password')
                 <span class="error">{{ $message }}</span>
             @enderror
 
