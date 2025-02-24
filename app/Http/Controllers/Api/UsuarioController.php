@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Usuario;
+use App\Models\User;
+use Hash;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -13,7 +14,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return response()->json(Usuario::all(), 200);
+        return response()->json(User::all(), 200);
     }
 
     /**
@@ -23,12 +24,17 @@ class UsuarioController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string',
             'direccion' => 'required|string',
             'telefono' => 'required|string',
         ]);
 
-        $usuario = Usuario::create($validated);
+        $validated ['password'] = Hash::make($validated['password']);
+
+        //$usuario = Usuario::create($validated);
+
+        $usuario = User::create($validated);
 
         return response()->json($usuario, 201);
     }
@@ -38,7 +44,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
@@ -52,7 +58,7 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
@@ -60,10 +66,15 @@ class UsuarioController extends Controller
 
         $validated = $request->validate([
             'name' => 'string|max:255',
-            'email' => 'email|unique:usuarios,email,' . $id,
+            'email' => "email|unique:users,email,$id",
+            'password' => 'required|string',
             'direccion' => 'string',
             'telefono' => 'string',
         ]);
+
+        if($validated['password']) {
+            $validated ['password'] = Hash::make($validated['password']);
+        }
 
         $usuario->update($validated);
 
@@ -75,7 +86,7 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         if (!$usuario) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);

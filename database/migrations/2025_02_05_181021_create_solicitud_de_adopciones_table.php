@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('solicitud_de_adopciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('mascota_id')->constrained('mascotas')->onDelete('cascade');
             $table->timestamp('fecha_solicitud')->default(now());
             $table->enum('estado', ['pendiente', 'aprobada', 'rechazada'])->default('pendiente');
