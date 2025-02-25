@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Usuario;
+use Hash;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
     public function index(){
-        $usuarios = Usuario::all();
+        $usuarios = User::all();
         return view('usuario.index', ['usuarios' => $usuarios]);
         
     }
 
     public function show($id){
         
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
         
         return view('usuario.show', ['usuario' => $usuario/*, 'estados' => $this->estados*/]);
     }
@@ -28,35 +30,42 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string',
+            'name' => 'required|string',
+            'password' => 'required|string',
             'email' => ['required', 'string'],
             'direccion' => 'required|string',
             'telefono' => 'required|string'
         ]);
 
-        Usuario::create($validated);
+        $validated ['password'] = Hash::make($validated['password']);
+
+        User::create($validated);
 
         return redirect()->route('usuario.index');
     }
 
     public function showUpdateView($id)
     {
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
         return view('usuario.update', ['usuario' => $usuario/*, 'estados' => $this->estados*/]);
     }
 
     public function update(Request $request, string $id)
     {
         
-
-        $usuario = Usuario::find($id);
+        $usuario = User::find($id);
 
         $validated = $request->validate([
-            'nombre' => 'required|string',
+            'name' => 'required|string',
+            'password' => 'required|string',
             'email' => ['required', 'string'],
             'direccion' => 'required|string',
             'telefono' => 'required|string'
-        ]);
+        ]);  
+        
+        if($validated['password']) {
+            $validated ['password'] = Hash::make($validated['password']);
+        }
 
         $usuario->update($validated);
 
@@ -65,7 +74,7 @@ class UsuarioController extends Controller
 
     public function delete(string $id)
     {
-        Usuario::find($id)->delete();
+        User::find($id)->delete();
         return redirect()->route('usuario.index');
     }
 }

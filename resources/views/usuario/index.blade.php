@@ -63,7 +63,7 @@
 
                 <!-- Información del Usuario -->
                 <div class="usuario-info">
-                    <h2>{{ $usuario->nombre }}</h2>
+                    <h2>{{ $usuario->name }}</h2>
                     <p><strong>Email:</strong> {{ $usuario->email }}</p>
                     <p><strong>Dirección:</strong> {{ $usuario->direccion }}</p>
                     <p><strong>Teléfono:</strong> {{ $usuario->telefono }}</p>

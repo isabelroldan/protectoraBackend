@@ -21,7 +21,7 @@
             <!-- Información de la Solicitud -->
             <div class="detalle-solicitud-info">
                 <h2>Solicitud #{{ $solicitud->id }}</h2>
-                <p><strong>Usuario:</strong> {{ $solicitud->usuario->nombre }}</p>
+                <p><strong>Usuario:</strong> {{ $solicitud->usuario->name }}</p>
                 <p><strong>Mascota:</strong> {{ $solicitud->mascota->nombre }}</p>
                 <p><strong>Fecha de Solicitud:</strong> {{ \Carbon\Carbon::parse($solicitud->fecha_solicitud)->format('d/m/Y') }}</p>
                 <p><strong>Estado:</strong> {{ ucfirst($solicitud->estado) }}</p>

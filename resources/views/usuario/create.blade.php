@@ -1,53 +1,3 @@
-<!--<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-
-    <title>El título de mi página</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-
-  <body>
-    <h1>Usuario</h1>
-
-    <form action="{{route("usuario.create" )}}" method="post">
-    @csrf
-    
-    <label for="nombre">Nombre: </label>
-    <input type="text" id="nombre" name="nombre"><br/>
-
-    @error('nombre')
-    <span style="color:red">{{ $message }}</span><br/>
-    @enderror
-
-    <label for="email">Email: </label>
-    <input type="text" id="email" name="email"><br/>
-
-    @error('email')
-    <span style="color:red">{{ $message }}</span><br/>
-    @enderror
-    
-
-    <label for="direccion">Dirección: </label>
-    <input type="text" id="direccion" name="direccion"><br/>
-
-    @error('direccion')
-    <span style="color:red">{{ $message }}</span><br/>
-    @enderror
-
-    <label for="telefono">Teléfono: </label>
-    <textarea id="telefono" name="telefono" rows="3"></textarea><br/>
-
-    @error('telefono')
-    <span style="color:red">{{ $message }}</span><br/>
-    @enderror
-
-    <button type="submit">Crear</button>
-
-</form>
-  </body>
-</html>-->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -72,7 +22,7 @@
 
             <!-- Nombre -->
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}">
+            <input type="text" id="name" name="name" value="{{ old('name') }}">
             @error('nombre')
                 <span class="error">{{ $message }}</span>
             @enderror
@@ -81,6 +31,12 @@
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="{{ old('email') }}">
             @error('email')
+                <span class="error">{{ $message }}</span>
+            @enderror
+
+            <label for="password">Contraseña:</label>
+            <input type="text" id="password" name="password" value="{{ old('password') }}">
+            @error('password')
                 <span class="error">{{ $message }}</span>
             @enderror
 

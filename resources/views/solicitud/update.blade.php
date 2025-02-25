@@ -25,7 +25,7 @@
             <select id="usuario_id" name="usuario_id">
                 @foreach($usuarios as $usuario)
                     <option value="{{ $usuario->id }}" {{ $solicitud->usuario_id == $usuario->id ? 'selected' : '' }}>
-                        {{ $usuario->nombre }}
+                        {{ $usuario->name }}
                     </option>
                 @endforeach
             </select>

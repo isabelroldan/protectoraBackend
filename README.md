@@ -1,66 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Proyecto de Adopción de Mascotas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Índice
+1. [Introducción](#introducción)
+2. [Requisitos](#requisitos)
+3. [Instalación](#instalación)
+4. [Estructura del Proyecto](#estructura-del-proyecto)
+5. [Base de Datos](#base-de-datos)
+   - [Migraciones](#migraciones)
+   - [Modelos](#modelos)
+   - [Seeders](#seeders)
+   - [Factories](#factories)
+6. [Controladores](#controladores)
+   - [Controladores Web](#controladores-web)
+   - [Controladores API](#controladores-api)
+7. [Vistas](#vistas)
+8. [Rutas](#rutas)
+9. [Autenticación](#autenticación)
+10. [Tests](#tests)
+11. [API Documentation](#api-documentation)
+12. [Despliegue](#despliegue)
+13. [Contribución](#contribución)
+14. [Licencia](#licencia)
 
-## About Laravel
+## Introducción
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Este proyecto es una plataforma de adopción de mascotas desarrollada con Laravel. Permite a los usuarios ver mascotas disponibles para adopción, hacer solicitudes de adopción y a los administradores gestionar todo el proceso.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP >= 7.4
+- Composer
+- SQLite
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalación
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clonar el repositorio:
+git clone https://github.com/tu-usuario/proyecto-adopcion-mascotas.git
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+2. Instalar dependencias de PHP:
+composer install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+3. Copiar el archivo de configuración:
+cp .env.example .env
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+4. Generar clave de aplicación:
+php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+5. Configurar la base de datos en el archivo `.env`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+6. Ejecutar migraciones y seeders:
+php artisan migrate --seed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+7. Iniciar el servidor de desarrollo:
+php artisan serve
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Estructura del Proyecto
+
+El proyecto sigue la estructura estándar de Laravel, con algunas carpetas adicionales:
+
+- `app/`: Contiene el código principal de la aplicación
+- `Http/Controllers/`: Controladores de la aplicación
+- `Http/Controllers/Api/`: Controladores para la API
+- `Models/`: Modelos de Eloquent
+- `database/`: Contiene migraciones, factories y seeders
+- `resources/`: Contiene vistas, assets y archivos de lenguaje
+- `routes/`: Contiene archivos de definición de rutas
+- `tests/`: Contiene los tests automatizados
+
+## Base de Datos
+
+### Migraciones
+
+Las migraciones se encuentran en `database/migrations/`. Definen la estructura de la base de datos. Principales migraciones:
+
+- `create_users_table.php`: Tabla de usuarios
+- `create_mascotas_table.php`: Tabla de mascotas
+- `create_solicitud_de_adopciones_table.php`: Tabla de solicitudes de adopción
+
+Para ejecutar las migraciones:
+php artisan migrate
+
+
+### Modelos
+
+Los modelos se encuentran en `app/Models/`. Representan las tablas de la base de datos y definen las relaciones entre ellas:
+
+- `User.php`: Modelo de usuario
+- `Mascota.php`: Modelo de mascota
+- `SolicitudDeAdopcion.php`: Modelo de solicitud de adopción
+
+### Seeders
+
+Los seeders se utilizan para poblar la base de datos con datos de prueba. Se encuentran en `database/seeders/`:
+
+- `DatabaseSeeder.php`: Seeder principal que llama a los demás seeders
+- `UserSeeder.php`: Crea usuarios de prueba
+- `MascotaSeeder.php`: Crea mascotas de prueba
+- `SolicitudDeAdopcionSeeder.php`: Crea solicitudes de adopción de prueba
+
+Para ejecutar los seeders:
+php artisan db:seed
+
+
+### Factories
+
+Los factories se utilizan para generar datos de prueba. Se encuentran en `database/factories/`:
+
+- `UserFactory.php`: Factory para crear usuarios
+- `MascotaFactory.php`: Factory para crear mascotas
+- `SolicitudDeAdopcionFactory.php`: Factory para crear solicitudes de adopción
+
+## Controladores
+
+### Controladores Web
+
+Los controladores web se encuentran en `app/Http/Controllers/`:
+
+- `UsuarioController.php`: Gestiona las operaciones relacionadas con los usuarios
+- `MascotaController.php`: Gestiona las operaciones relacionadas con las mascotas
+- `SolicitudDeAdopcionController.php`: Gestiona las operaciones relacionadas con las solicitudes de adopción
+
+### Controladores API
+
+Los controladores de la API se encuentran en `app/Http/Controllers/Api/`:
+
+- `UsuarioController.php`: Proporciona endpoints para operaciones CRUD de usuarios
+- `MascotaController.php`: Proporciona endpoints para operaciones CRUD de mascotas
+- `SolicitudDeAdopcionController.php`: Proporciona endpoints para operaciones CRUD de solicitudes de adopción
+
+## Vistas
+
+Las vistas se encuentran en `resources/views/`. Utilizan Blade como motor de plantillas:
+
+- `layouts/`: Contiene las plantillas base
+- `users/`: Vistas relacionadas con los usuarios
+- `mascotas/`: Vistas relacionadas con las mascotas
+- `solicitudes/`: Vistas relacionadas con las solicitudes de adopción
+
+## Rutas
+
+Las rutas se definen en los archivos dentro de `routes/`:
+
+- `web.php`: Rutas para la interfaz web
+- `api.php`: Rutas para la API
+
+## Autenticación
+
+La autenticación se maneja utilizando Laravel Sanctum para la API y el sistema de autenticación predeterminado de Laravel para la interfaz web.
+
+## Tests
+
+Los tests se encuentran en la carpeta `tests/`. Se utilizan PHPUnit y Laravel's testing utilities:
+
+- `Feature/`: Contiene tests de feature que prueban múltiples componentes trabajando juntos
+- `Unit/`: Contiene tests unitarios que prueban componentes individuales
+
+Para ejecutar los tests:
+php artisan test
+
