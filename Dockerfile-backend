@@ -1,0 +1,46 @@
+# Usammos la imagen base de PHP 8.3 con Apache
+FROM php:8.3.0-apache-bullseye
+
+# Directorio de trabajo en el contenedor
+WORKDIR /var/www/html
+
+# Instalamos dependencias necesarias
+RUN apt-get update && \
+    apt-get install -y \
+        unzip \
+        git \
+        libzip-dev \
+        libonig-dev \
+        libxml2-dev \
+        ca-certificates \
+        apt-transport-https \
+        software-properties-common \
+        sqlite3 \
+        libsqlite3-dev \
+    && docker-php-ext-install zip mbstring xml pdo_sqlite
+
+# Instalamos Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Clonamos el repositorio desde GitHub
+RUN git clone https://github.com/isabelroldan/protectoraBackend.git .
+
+# Copiamos el archivo .env.example a .env
+RUN cp .env.example .env
+
+# Instalamos las dependencias de Laravel usando Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Configuración de Apache para Laravel
+RUN sed -i 's#DocumentRoot /var/www/html#DocumentRoot /var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
+
+# Generamos la clave de la aplicación de Laravel y configuramos permisos
+RUN php artisan key:generate && \
+    php artisan storage:link && \
+    php artisan install:api && \
+    php artisan migrate --seed && \
+    chown -R www-data:www-data /var/www/html && \
+    chmod 777 /var/www/html/database/database.sqlite
+
+# Habilitamos el módulo rewrite (para cross domain)
+RUN a2enmod rewrite
