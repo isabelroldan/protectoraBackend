@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 
 class SolicitudDeAdopcionController extends Controller
 {
-    private array $estados;
+    private array $estados; //Lista de estados posibles que puede tner una solicitud de adopción
 
+    /**
+     * En el contructor inicializo los estados de una solicitud
+     */
     public function __construct()
     {
         $this->estados = [
@@ -20,36 +23,47 @@ class SolicitudDeAdopcionController extends Controller
         ];
     }
 
+    /**
+     * Muestra todas las solicitudes de adopción con datos de usuario y mascota
+     */
     public function index()
     {
         $solicitudes = SolicitudDeAdopcion::with(['usuario', 'mascota'])->get();
         return view('solicitud.index', ['solicitudes' => $solicitudes]);
     }
 
+    /**
+     * Muestra los detalles de una solicitud específica
+     */
     public function show($id)
     {
         $solicitud = SolicitudDeAdopcion::with(['usuario', 'mascota'])->findOrFail($id);
         return view('solicitud.show', ['solicitud' => $solicitud, 'estados' => $this->estados]);
     }
 
+    /**
+     * Muestra el formulario para crear una nueva solicitud de adopción
+     */
     public function showCreateView()
-{
-    $usuarios = User::all(); // Obtenemos todos los usuarios
-    $mascotas = Mascota::all(); // Obtenemos todas las mascotas
-    $estados = [
-        'pendiente' => 'Pendiente',
-        'aprobada' => 'Aprobada',
-        'rechazada' => 'Rechazada'
-    ]; // Estados disponibles, que aceptamos en nuestra base de datos
+    {
+        $usuarios = User::all(); // Obtengo todos los usuarios
+        $mascotas = Mascota::all(); // Obtengo todas las mascotas
+        $estados = [
+            'pendiente' => 'Pendiente',
+            'aprobada' => 'Aprobada',
+            'rechazada' => 'Rechazada'
+        ]; // Estados disponibles, que aceptamos en nuestra base de datos
 
-    return view('solicitud.create', [
-        'usuarios' => $usuarios,
-        'mascotas' => $mascotas,
-        'estados' => $estados
-    ]);
-}
+        return view('solicitud.create', [
+            'usuarios' => $usuarios,
+            'mascotas' => $mascotas,
+            'estados' => $estados
+        ]);
+    }
 
-
+    /**
+     * Almacena una nueva solicitud de adopción
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -65,6 +79,9 @@ class SolicitudDeAdopcionController extends Controller
         return redirect()->route('solicitud.index');
     }
 
+    /**
+     * Muestra la vista de actualización de una solicitud
+     */
     public function showUpdateView($id)
     {
         $solicitud = SolicitudDeAdopcion::findOrFail($id);
@@ -78,6 +95,9 @@ class SolicitudDeAdopcionController extends Controller
         ]);
     }
 
+    /**
+     * Actualiza una solicitud de adopción
+     */
     public function update(Request $request, string $id)
     {
         $solicitud = SolicitudDeAdopcion::findOrFail($id);
@@ -95,6 +115,9 @@ class SolicitudDeAdopcionController extends Controller
         return redirect()->route('solicitud.index');
     }
 
+    /**
+     * Elimina una solicitud de adopción
+     */
     public function delete(string $id)
     {
         SolicitudDeAdopcion::findOrFail($id)->delete();
