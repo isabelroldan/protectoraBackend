@@ -1,33 +1,3 @@
-<!--<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-
-    <title>El título de mi página</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-
-  <body>
-    <h1>uSUARIO</h1>
-
-    <form action="#" method="post">
-        <label for="nombre"></label>
-        <input type="text" id="nombre" name="nombre" value="{{$usuario->nombre}}" disabled>
-
-        <label for="email"></label>
-        <input type="text" id="email" name="email" value="{{$usuario->email}}" disabled>
-
-        <label for="direccion"></label>
-        <input type="text" id="direccion" name="direccion" value="{{$usuario->direccion}}" disabled>
-
-        <label for="telefono"></label>
-        <textarea id="telefono" name="telefono" rows="3"  disabled>{{$usuario->telefono}}</textarea>
-
-    </form>
-    
-  </body>
-</html>-->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

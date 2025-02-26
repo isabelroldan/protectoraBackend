@@ -1,36 +1,3 @@
-<!--<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-
-    <title>El título de mi página</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-
-  <body>
-    <h1>Mascotitas</h1>
-    
-    <button><a href="{{route("mascota.showCreateView" )}}">Añadir mascota</a></button>
-
-    <ul>
-        @forelse($mascotas as $mascota)
-            <li>{{$mascota->nombre}} -- Edad: {{$mascota->edad}} años {{$mascota->especie}} Acciones 
-              <button><a href="{{route("mascota.show",['id' => $mascota->id] )}}">Ver detalle</a></button>
-              <button><a href="{{route("mascota.showUpdateView",['id' => $mascota->id] )}}">Editar</a></button>
-              <form action="{{ route('mascota.delete', $mascota->id) }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="btn btn-outline-danger">Borrar</button>
-              </form>
-            </li> 
-        @empty
-            <li>La lista de perritos esta vacía</li>   
-        @endforelse  
-    </ul>
-  </body>
-</html>-->
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

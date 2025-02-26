@@ -1,35 +1,3 @@
-<!--<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-
-    <title>El título de mi página</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-
-  <body>
-    <h1>Usuarios</h1>
-    
-    <button><a href="{{route("usuario.showCreateView" )}}">Añadir usuario</a></button>
-
-    <ul>
-        @forelse($usuarios as $usuario)
-            <li>{{$usuario->nombre}} -- Email: {{$usuario->email}}  {{$usuario->direccion}}  {{$usuario->telefono}} Acciones 
-              <button><a href="{{route("usuario.show",['id' => $usuario->id] )}}">Ver detalle</a></button>
-              <button><a href="{{route("usuario.showUpdateView",['id' => $usuario->id] )}}">Editar</a></button>
-              <form action="{{ route('usuario.delete', $usuario->id) }}" method="POST">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="btn btn-outline-danger">Borrar</button>
-              </form>
-            </li> 
-        @empty
-            <li>La lista de usuaritos esta vacía</li>   
-        @endforelse  
-    </ul>
-  </body>
-</html>-->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

@@ -26,15 +26,15 @@ nav ul {
 nav ul li a {
     text-decoration: none;
     font-weight: bold;
-    color: #000; /* Color negro por defecto */
+    color: #000; 
 }
 
 nav ul li a:hover {
-    color: #FFC382; /* Color de hover */
+    color: #FFC382; 
 }
 
 nav ul li a.active {
-    color: #FFC382; /* Color de la opción activa */
+    color: #FFC382; 
 }
 
 /* General */
@@ -292,23 +292,6 @@ textarea {
     resize: none; /* Evita redimensionar el textarea */
 }
 
-/* Botón de Enviar */
-/*.btn-submit {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #FFC382;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}*/
-
-/*.btn-submit:hover {
-    background-color: #e6a96d; 
-}*/
-
 /* Mensajes de Error */
 .error {
     color: red;
@@ -330,7 +313,6 @@ textarea {
 .btn-volver:hover {
     background-color: #e6a96d; /* Color más oscuro al pasar el cursor */
 }
-
 
 /* Contenedor de Usuarios */
 .usuarios-container {
