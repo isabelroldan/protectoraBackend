@@ -14,6 +14,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
+     * Atributos que se asignan masivamente
      *
      * @var list<string>
      */
@@ -27,6 +28,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for serialization.
+     * Estos atributos se oculta en respuesats JSON por seguridad
      *
      * @var list<string>
      */
@@ -37,6 +39,7 @@ class User extends Authenticatable
 
     /**
      * Get the attributes that should be cast.
+     * Conversión para email_verified_at a datetime y pasword a hashed
      *
      * @return array<string, string>
      */
