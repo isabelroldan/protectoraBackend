@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SolicitudDeAdopcion;
 use App\Models\Mascota;
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SolicitudDeAdopcionController extends Controller
@@ -34,13 +34,13 @@ class SolicitudDeAdopcionController extends Controller
 
     public function showCreateView()
 {
-    $usuarios = Usuario::all(); // Obtener todos los usuarios
-    $mascotas = Mascota::all(); // Obtener todas las mascotas
+    $usuarios = User::all(); // Obtenemos todos los usuarios
+    $mascotas = Mascota::all(); // Obtenemos todas las mascotas
     $estados = [
         'pendiente' => 'Pendiente',
         'aprobada' => 'Aprobada',
         'rechazada' => 'Rechazada'
-    ]; // Estados disponibles
+    ]; // Estados disponibles, que aceptamos en nuestra base de datos
 
     return view('solicitud.create', [
         'usuarios' => $usuarios,
@@ -53,7 +53,7 @@ class SolicitudDeAdopcionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'usuario_id' => 'required|exists:users,id',
             'mascota_id' => 'required|exists:mascotas,id',
             'fecha_solicitud' => 'required|date',
             'estado' => 'required|string|in:pendiente,aprobada,rechazada',
@@ -68,7 +68,7 @@ class SolicitudDeAdopcionController extends Controller
     public function showUpdateView($id)
     {
         $solicitud = SolicitudDeAdopcion::findOrFail($id);
-        $usuarios = Usuario::all();
+        $usuarios = User::all();
         $mascotas = Mascota::all();
         return view('solicitud.update', [
             'solicitud' => $solicitud,
@@ -83,7 +83,7 @@ class SolicitudDeAdopcionController extends Controller
         $solicitud = SolicitudDeAdopcion::findOrFail($id);
 
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'usuario_id' => 'required|exists:users,id',
             'mascota_id' => 'required|exists:mascotas,id',
             'fecha_solicitud' => 'required|date',
             'estado' => 'required|string|in:pendiente,aprobada,rechazada',
