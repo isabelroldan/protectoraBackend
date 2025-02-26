@@ -34,17 +34,17 @@ class UsuarioControllerTest extends TestCase
     {
         Sanctum::actingAs($this->user);
         $userData = [
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'password' => 'password123',
-            'direccion' => 'Calle Falsa 123',
+            'name' => 'Isa',
+            'email' => 'isa@gmail.com',
+            'password' => 'password',
+            'direccion' => 'Calle Sin Nombre 1',
             'telefono' => '123456789',
         ];
 
         $response = $this->postJson('/api/usuarios', $userData);
 
         $response->assertStatus(201)
-                 ->assertJsonFragment(['name' => 'John Doe', 'email' => 'john@example.com']);
+                 ->assertJsonFragment(['name' => 'Isa', 'email' => 'isa@gmail.com']);
     }
 
     public function test_can_show_user()
@@ -60,17 +60,17 @@ class UsuarioControllerTest extends TestCase
     {
         Sanctum::actingAs($this->user);
         $updatedData = [
-            'name' => 'Jane Doe',
-            'email' => 'jane@example.com',
-            'password' => 'newpassword123',
-            'direccion' => 'Nueva Calle 456',
-            'telefono' => '987654321',
+            'name' => 'Isa Editado',
+            'email' => 'isaeditado@gmail.com',
+            'password' => 'password123',
+            'direccion' => 'Calle Sin Cambiada 1',
+            'telefono' => '123456789',
         ];
 
         $response = $this->putJson("/api/usuarios/{$this->user->id}", $updatedData);
 
         $response->assertStatus(200)
-                 ->assertJsonFragment(['name' => 'Jane Doe', 'email' => 'jane@example.com']);
+                 ->assertJsonFragment(['name' => 'Isa Editado', 'email' => 'isaeditado@gmail.com']);
     }
 
     public function test_can_delete_user()

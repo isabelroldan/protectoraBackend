@@ -68,14 +68,14 @@ class MascotaControllerTest extends TestCase
         $mascota = Mascota::factory()->create();
 
         $updatedData = [
-            'nombre' => 'Max',
+            'nombre' => 'Firu',
             'estado' => 'en proceso de adopción'
         ];
 
         $response = $this->putJson("/api/mascotas/{$mascota->id}", $updatedData);
 
         $response->assertStatus(200)
-                 ->assertJsonFragment(['nombre' => 'Max', 'estado' => 'en proceso de adopción']);
+                 ->assertJsonFragment(['nombre' => 'Firu', 'estado' => 'en proceso de adopción']);
 
         $this->assertDatabaseHas('mascotas', ['id' => $mascota->id, 'nombre' => 'Max']);
     }
