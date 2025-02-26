@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class UsuarioController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra un listado de todos los usuarios registrados en la base de datos.
      */
     public function index()
     {
@@ -18,7 +18,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un nuevo usuario en la base de datos.
      */
     public function store(Request $request)
     {
@@ -32,15 +32,13 @@ class UsuarioController extends Controller
 
         $validated ['password'] = Hash::make($validated['password']);
 
-        //$usuario = Usuario::create($validated);
-
         $usuario = User::create($validated);
 
         return response()->json($usuario, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los detalles de un usuario específico por su Id
      */
     public function show($id)
     {
@@ -54,7 +52,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza los datos de un usuario existente.
      */
     public function update(Request $request, $id)
     {
@@ -89,14 +87,14 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un usuario de la base de datos.
      */
     public function destroy($id)
     {
         $usuario = User::find($id);
 
         if (!$usuario) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
+            return response()->json(['message' => 'Usuario no encontrado'], 404); //Si no lo encuentra devuelve un 404
         }
 
         $usuario->delete();
