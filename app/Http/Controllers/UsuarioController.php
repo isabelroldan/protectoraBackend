@@ -80,15 +80,22 @@ class UsuarioController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string',
-            'password' => 'required|string',
+            //'password' => 'required|string',
             'email' => ['required', 'string'],
             'direccion' => 'required|string',
             'telefono' => 'required|string'
         ]);
 
-        // Solo se encripta la contraseña si se ha proporcionado una nueva
-        if ($validated['password']) {
+        
+        /*if ($validated['password']) {
             $validated['password'] = Hash::make($validated['password']);
+        }*/
+
+        // Solo se encripta la contraseña si se ha proporcionado una nueva
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
         }
 
         // Actualizamos los datos del usuario
