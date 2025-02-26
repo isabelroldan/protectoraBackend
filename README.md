@@ -17,10 +17,6 @@
 8. [Rutas](#rutas)
 9. [Autenticación](#autenticación)
 10. [Tests](#tests)
-11. [API Documentation](#api-documentation)
-12. [Despliegue](#despliegue)
-13. [Contribución](#contribución)
-14. [Licencia](#licencia)
 
 ## Introducción
 
@@ -60,6 +56,8 @@ php artisan migrate --seed
 
 7. Iniciar el servidor de desarrollo:
 php artisan serve
+
+Otra forma es, que si tienes Docker instalado, descargues los dos Dockerfile y el docker-compose y ejecutes el comando en una terminal dentro de la ruta donde te lo has descargado "docker compose up". De esta forma tendrás tanto el frontend (React) como el backend (Laravel) que los clonará directamente de sus respectivos repositorios de GitHub y ahorá todo lo necesario para que sean funcionales, como poblar la base de datos con los seeder. Para iniciar sesión en el frontend con React te pedirá un usuario y contraseña que puedes usar "isabelroldancordoba@hotmail.com" como usuario y como contraseña "password".
 
 
 ## Estructura del Proyecto
