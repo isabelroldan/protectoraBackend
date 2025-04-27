@@ -5,20 +5,62 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Mascota;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Tag(
+ *     name="Mascotas",
+ *     description="Operaciones relacionadas con mascotas"
+ * )
+ * @OA\Security(
+ *     security={"bearerAuth": {}}
+ * )
+ */
 class MascotaController extends Controller
+
 {
     /**
-     * Devuelve la lista de todas las mascotas en formato JSON con un codigo 200
+     * @OA\Get(
+     *     path="/api/mascotas",
+     *     summary="Obtener todas las mascotas",
+     *     tags={"Mascotas"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de mascotas"
+     *     )
+     * )
      */
     public function index()
     {
         return response()->json(Mascota::all(), 200); 
     }
 
-    /**
-     * Almacena una nueva mascota en la base de datos
-     * Devuelve la mascota que se ha creado con el codigo 201 (Created)
+   /**
+     * @OA\Post(
+     *     path="/api/mascotas",
+     *     summary="Crear una nueva mascota",
+     *     tags={"Mascotas"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre","especie","raza","edad","descripcion","estado"},
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="especie", type="string"),
+     *             @OA\Property(property="raza", type="string"),
+     *             @OA\Property(property="edad", type="integer"),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="estado", type="string", enum={"disponible","en proceso de adopción","adoptado"})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Mascota creada exitosamente"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Datos inválidos"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -37,7 +79,25 @@ class MascotaController extends Controller
     }
 
     /**
-     * Muestra los detalles de una mascota específica por su ID con un código 200
+     * @OA\Get(
+     *     path="/api/mascotas/{id}",
+     *     summary="Obtener una mascota por ID",
+     *     tags={"Mascotas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mascota encontrada"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Mascota no encontrada"
+     *     )
+     * )
      */
     public function show($id)
     {
@@ -52,8 +112,35 @@ class MascotaController extends Controller
     }
 
     /**
-     * Actualiza los datos de una mascota existente
-     * Devuelve la mascota modificada con un 200
+     * @OA\Put(
+     *     path="/api/mascotas/{id}",
+     *     summary="Actualizar una mascota",
+     *     tags={"Mascotas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="especie", type="string"),
+     *             @OA\Property(property="raza", type="string"),
+     *             @OA\Property(property="edad", type="integer"),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="estado", type="string", enum={"disponible","en proceso de adopción","adoptado"})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mascota actualizada"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Mascota no encontrada"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -79,8 +166,25 @@ class MascotaController extends Controller
     }
 
     /**
-     * Elimina una mascota de la base de datos
-     * Devuelve un 200 si el proceso se ha completado con éxito.
+     * @OA\Delete(
+     *     path="/api/mascotas/{id}",
+     *     summary="Eliminar una mascota",
+     *     tags={"Mascotas"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mascota eliminada"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Mascota no encontrada"
+     *     )
+     * )
      */
     public function destroy($id)
     {

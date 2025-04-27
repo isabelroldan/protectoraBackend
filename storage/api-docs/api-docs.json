@@ -1,0 +1,631 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de la Protectora",
+        "description": "Documentación de la API para gestión de mascotas",
+        "contact": {
+            "email": "isa@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/mascotas": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Obtener todas las mascotas",
+                "operationId": "b06bcf95c18bee8ed15647d8fa088cbf",
+                "responses": {
+                    "200": {
+                        "description": "Lista de mascotas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Crear una nueva mascota",
+                "operationId": "7ef45de4bf722d348a63d7f462b44898",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "especie",
+                                    "raza",
+                                    "edad",
+                                    "descripcion",
+                                    "estado"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "especie": {
+                                        "type": "string"
+                                    },
+                                    "raza": {
+                                        "type": "string"
+                                    },
+                                    "edad": {
+                                        "type": "integer"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "disponible",
+                                            "en proceso de adopción",
+                                            "adoptado"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mascota creada exitosamente"
+                    },
+                    "422": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/api/mascotas/{id}": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Obtener una mascota por ID",
+                "operationId": "1a2eaf8302ca37018e3c8449c1b7c9ea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mascota encontrada"
+                    },
+                    "404": {
+                        "description": "Mascota no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Actualizar una mascota",
+                "operationId": "58258f41d5e256a91ee928955dbd1ad8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "especie": {
+                                        "type": "string"
+                                    },
+                                    "raza": {
+                                        "type": "string"
+                                    },
+                                    "edad": {
+                                        "type": "integer"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "disponible",
+                                            "en proceso de adopción",
+                                            "adoptado"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mascota actualizada"
+                    },
+                    "404": {
+                        "description": "Mascota no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Eliminar una mascota",
+                "operationId": "ff434682a0ddbfa68e8fc15a98d51de7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mascota eliminada"
+                    },
+                    "404": {
+                        "description": "Mascota no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/solicitudes": {
+            "get": {
+                "tags": [
+                    "Solicitudes de Adopción"
+                ],
+                "summary": "Listar todas las solicitudes de adopción",
+                "operationId": "7e61361aa7a24c0dc1b8b569584e7835",
+                "responses": {
+                    "200": {
+                        "description": "Listado de solicitudes de adopción"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Solicitudes de Adopción"
+                ],
+                "summary": "Crear una nueva solicitud de adopción",
+                "operationId": "5225435ceee3f52b474cb709095c170c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "mascota_id",
+                                    "fecha_solicitud",
+                                    "estado"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "mascota_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "fecha_solicitud": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-05-01"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pendiente",
+                                            "aprobada",
+                                            "rechazada"
+                                        ],
+                                        "example": "pendiente"
+                                    },
+                                    "comentario": {
+                                        "type": "string",
+                                        "example": "Me encantaría adoptar a esta mascota"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Solicitud de adopción creada"
+                    }
+                }
+            }
+        },
+        "/api/solicitudes/{id}": {
+            "get": {
+                "tags": [
+                    "Solicitudes de Adopción"
+                ],
+                "summary": "Obtener una solicitud de adopción específica",
+                "operationId": "bf35f3383ce95b47f2011fb2631a7b71",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la solicitud de adopción",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la solicitud de adopción"
+                    },
+                    "404": {
+                        "description": "Solicitud no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Solicitudes de Adopción"
+                ],
+                "summary": "Actualizar una solicitud de adopción",
+                "operationId": "11545b5026dc0d26a78d523ba1324065",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la solicitud a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "mascota_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "fecha_solicitud": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-05-01"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pendiente",
+                                            "aprobada",
+                                            "rechazada"
+                                        ],
+                                        "example": "aprobada"
+                                    },
+                                    "comentario": {
+                                        "type": "string",
+                                        "example": "Comentario actualizado"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Solicitud de adopción actualizada"
+                    },
+                    "404": {
+                        "description": "Solicitud no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Solicitudes de Adopción"
+                ],
+                "summary": "Eliminar una solicitud de adopción",
+                "operationId": "d456a4f35791639e26c4067da51a68c1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la solicitud a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Solicitud de adopción eliminada"
+                    },
+                    "404": {
+                        "description": "Solicitud no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Lista todos los usuarios",
+                "description": "Devuelve todos los usuarios registrados en la base de datos.",
+                "operationId": "listarUsuarios",
+                "responses": {
+                    "200": {
+                        "description": "Listado de usuarios obtenido exitosamente."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Crear un nuevo usuario",
+                "description": "Crea y almacena un nuevo usuario.",
+                "operationId": "crearUsuario",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "direccion",
+                                    "telefono"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Pérez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "juan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "example": "Calle Falsa 123"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado exitosamente."
+                    },
+                    "422": {
+                        "description": "Error de validación."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Mostrar un usuario",
+                "description": "Devuelve los detalles de un usuario específico.",
+                "operationId": "mostrarUsuario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos del usuario."
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualizar un usuario",
+                "description": "Actualiza los datos de un usuario existente.",
+                "operationId": "actualizarUsuario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Actualizado"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "juanactualizado@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "newpassword123"
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "example": "Calle Nueva 456"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "987654321"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado exitosamente."
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Eliminar un usuario",
+                "description": "Elimina un usuario de la base de datos.",
+                "operationId": "eliminarUsuario",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado exitosamente."
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Mascotas",
+            "description": "Operaciones relacionadas con mascotas"
+        },
+        {
+            "name": "Solicitudes de Adopción",
+            "description": "Operaciones relacionadas con las solicitudes de adopción"
+        },
+        {
+            "name": "Usuarios",
+            "description": "Usuarios"
+        }
+    ],
+    "security": [
+        {
+            "sanctum": []
+        }
+    ]
+}

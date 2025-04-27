@@ -7,7 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Middleware\VerificarToken;
 
 
-Route::post('login', [LoginController::class, 'login']);
+Route::post('login', action: [LoginController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('mascotas', MascotaController::class);

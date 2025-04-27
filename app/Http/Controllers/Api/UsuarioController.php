@@ -6,11 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class UsuarioController extends Controller
 {
     /**
-     * Muestra un listado de todos los usuarios registrados en la base de datos.
+     * @OA\Get(
+     *     path="/api/usuarios",
+     *     summary="Lista todos los usuarios",
+     *     description="Devuelve todos los usuarios registrados en la base de datos.",
+     *     operationId="listarUsuarios",
+     *     tags={"Usuarios"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Listado de usuarios obtenido exitosamente."
+     *     )
+     * )
      */
     public function index()
     {
@@ -18,7 +30,33 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Almacena un nuevo usuario en la base de datos.
+     * @OA\Post(
+     *     path="/api/usuarios",
+     *     summary="Crear un nuevo usuario",
+     *     description="Crea y almacena un nuevo usuario.",
+     *     operationId="crearUsuario",
+     *     tags={"Usuarios"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","email","password","direccion","telefono"},
+     *             @OA\Property(property="name", type="string", example="Juan Pérez"),
+     *             @OA\Property(property="email", type="string", example="juan@example.com"),
+     *             @OA\Property(property="password", type="string", example="password123"),
+     *             @OA\Property(property="direccion", type="string", example="Calle Falsa 123"),
+     *             @OA\Property(property="telefono", type="string", example="123456789")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Usuario creado exitosamente."
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Error de validación."
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -30,7 +68,7 @@ class UsuarioController extends Controller
             'telefono' => 'required|string',
         ]);
 
-        $validated ['password'] = Hash::make($validated['password']);
+        $validated['password'] = Hash::make($validated['password']);
 
         $usuario = User::create($validated);
 
@@ -38,7 +76,29 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Muestra los detalles de un usuario específico por su Id
+     * @OA\Get(
+     *     path="/api/usuarios/{id}",
+     *     summary="Mostrar un usuario",
+     *     description="Devuelve los detalles de un usuario específico.",
+     *     operationId="mostrarUsuario",
+     *     tags={"Usuarios"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del usuario",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Datos del usuario."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Usuario no encontrado."
+     *     )
+     * )
      */
     public function show($id)
     {
@@ -52,7 +112,39 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Actualiza los datos de un usuario existente.
+     * @OA\Put(
+     *     path="/api/usuarios/{id}",
+     *     summary="Actualizar un usuario",
+     *     description="Actualiza los datos de un usuario existente.",
+     *     operationId="actualizarUsuario",
+     *     tags={"Usuarios"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del usuario a actualizar",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Juan Actualizado"),
+     *             @OA\Property(property="email", type="string", example="juanactualizado@example.com"),
+     *             @OA\Property(property="password", type="string", example="newpassword123"),
+     *             @OA\Property(property="direccion", type="string", example="Calle Nueva 456"),
+     *             @OA\Property(property="telefono", type="string", example="987654321")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Usuario actualizado exitosamente."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Usuario no encontrado."
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -65,16 +157,10 @@ class UsuarioController extends Controller
         $validated = $request->validate([
             'name' => 'string|max:255',
             'email' => "email|unique:users,email,$id",
-            //'password' => 'required|string',
             'direccion' => 'string',
             'telefono' => 'string',
         ]);
 
-        /*if($validated['password']) {
-            $validated ['password'] = Hash::make($validated['password']);
-        }*/
-
-        // Solo se encripta la contraseña si se ha proporcionado una nueva
         if ($request->filled('password')) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
@@ -87,14 +173,36 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Elimina un usuario de la base de datos.
+     * @OA\Delete(
+     *     path="/api/usuarios/{id}",
+     *     summary="Eliminar un usuario",
+     *     description="Elimina un usuario de la base de datos.",
+     *     operationId="eliminarUsuario",
+     *     tags={"Usuarios"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del usuario a eliminar",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Usuario eliminado exitosamente."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Usuario no encontrado."
+     *     )
+     * )
      */
     public function destroy($id)
     {
         $usuario = User::find($id);
 
         if (!$usuario) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404); //Si no lo encuentra devuelve un 404
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
         $usuario->delete();
