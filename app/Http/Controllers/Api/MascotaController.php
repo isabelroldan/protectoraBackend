@@ -17,7 +17,6 @@ use OpenApi\Annotations as OA;
  * )
  */
 class MascotaController extends Controller
-
 {
     /**
      * @OA\Get(
@@ -32,10 +31,46 @@ class MascotaController extends Controller
      */
     public function index()
     {
-        return response()->json(Mascota::all(), 200); 
+        return response()->json(Mascota::all(), 200);
     }
 
-   /**
+    /**
+     * @OA\Get(
+     *     path="/api/mascotas/paginadas",
+     *     summary="Obtener mascotas paginadas",
+     *     tags={"Mascotas"},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Número de página",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Cantidad de mascotas por página",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de mascotas paginada"
+     *     )
+     * )
+     */
+    public function paginated(Request $request)
+    {
+        $perPage = $request->get('per_page', 10); // Por defecto 10 por página
+        $mascotas = Mascota::paginate($perPage);
+
+        return response()->json($mascotas, 200);
+    }
+
+
+
+
+    /**
      * @OA\Post(
      *     path="/api/mascotas",
      *     summary="Crear una nueva mascota",
@@ -75,7 +110,7 @@ class MascotaController extends Controller
 
         $mascota = Mascota::create($validated);
 
-        return response()->json($mascota, 201); 
+        return response()->json($mascota, 201);
     }
 
     /**
@@ -162,7 +197,7 @@ class MascotaController extends Controller
 
         $mascota->update($validated);
 
-        return response()->json($mascota, 200); 
+        return response()->json($mascota, 200);
     }
 
     /**

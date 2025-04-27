@@ -30,6 +30,40 @@ class UsuarioController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/usuarios/paginados",
+     *     summary="Obtener usuarios paginados",
+     *     tags={"Usuarios"},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Número de página",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Cantidad de elementos por página",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista paginada de usuarios"
+     *     )
+     * )
+     */
+    public function paginated(Request $request)
+    {
+        $perPage = $request->input('per_page', 10); // Por defecto 10
+        $usuarios = User::paginate($perPage);
+
+        return response()->json($usuarios, 200);
+    }
+
+
+    /**
      * @OA\Post(
      *     path="/api/usuarios",
      *     summary="Crear un nuevo usuario",

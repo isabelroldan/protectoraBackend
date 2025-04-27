@@ -85,6 +85,40 @@
                 }
             }
         },
+        "/api/mascotas/paginadas": {
+            "get": {
+                "tags": [
+                    "Mascotas"
+                ],
+                "summary": "Obtener mascotas paginadas",
+                "operationId": "628134b3612d5f14aef839aa44701e3c",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Cantidad de mascotas por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de mascotas paginada"
+                    }
+                }
+            }
+        },
         "/api/mascotas/{id}": {
             "get": {
                 "tags": [
@@ -262,6 +296,40 @@
                 "responses": {
                     "201": {
                         "description": "Solicitud de adopción creada"
+                    }
+                }
+            }
+        },
+        "/api/solicitudes/paginadas": {
+            "get": {
+                "tags": [
+                    "Solicitudes de Adopción"
+                ],
+                "summary": "Obtener solicitudes de adopción paginadas",
+                "operationId": "00d819997b825326de0a5fcf0baf3771",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Cantidad de elementos por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de solicitudes de adopción"
                     }
                 }
             }
@@ -461,6 +529,40 @@
                         "sanctum": []
                     }
                 ]
+            }
+        },
+        "/api/usuarios/paginados": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener usuarios paginados",
+                "operationId": "291ed9b31b957aa5b2d370eef80131e7",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número de página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Cantidad de elementos por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de usuarios"
+                    }
+                }
             }
         },
         "/api/usuarios/{id}": {
