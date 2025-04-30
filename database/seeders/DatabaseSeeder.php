@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'direccion' => "calle falsa 123", 
             'telefono' => "666666666", 
+            'rol' => 'admin',
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ]);
