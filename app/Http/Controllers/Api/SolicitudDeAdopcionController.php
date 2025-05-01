@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CambioEstadoSolicitud;
 use App\Models\SolicitudDeAdopcion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * @OA\Tag(
@@ -184,6 +186,15 @@ class SolicitudDeAdopcionController extends Controller
         ]);
 
         $solicitud->update($validated);
+
+        // Cargar las relaciones necesarias (usuario, mascota)
+        $solicitud->load('usuario', 'mascota');
+        /** @var \App\Models\SolicitudDeAdopcion $solicitud */
+
+
+        //dd($solicitud->usuario->email);
+        // Enviar email
+        Mail::to($solicitud->usuario->email)->send(new CambioEstadoSolicitud(solicitud: $solicitud));
 
         return response()->json($solicitud, 200);
     }
