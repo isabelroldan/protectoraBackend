@@ -41,17 +41,28 @@ class LoginController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         $validated = $request->validated();
+
         $user = User::where('email', $validated['email'])->first();
+
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             return response()->json([
                 'message' => 'Invalid Credentials'
             ], 401);
         }
+
         $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
+
         return response()->json([
             'access_token' => $token,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'rol' => $user->rol
+            ]
         ]);
     }
+
 
     /**
      * @OA\Post(
