@@ -36,36 +36,89 @@ class SolicitudDeAdopcionController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/solicitudes/paginadas",
-     *     summary="Obtener solicitudes de adopción paginadas",
-     *     tags={"Solicitudes de Adopción"},
+     *     path="/solicitudes/paginadas",
+     *     summary="Obtener solicitudes de adopción paginadas y filtradas",
+     *     tags={"Solicitudes"},
+     *     security={{"sanctum":{}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
-     *         description="Número de página",
+     *         description="Número de página para paginación",
      *         required=false,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="integer", default=1)
      *     ),
      *     @OA\Parameter(
-     *         name="per_page",
+     *         name="perPage",
      *         in="query",
-     *         description="Cantidad de elementos por página",
+     *         description="Número de elementos por página (siempre será 12)",
      *         required=false,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="integer", default=12, enum={12})
+     *     ),
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Término de búsqueda para filtrar por usuario, mascota, estado o fecha (fecha en formato dd/mm/yyyy, dd-mm-yyyy o fragmentos de fecha como números)",
+     *         required=false,
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Lista paginada de solicitudes de adopción"
-     *     )
+     *         description="Lista paginada de solicitudes",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="current_page", type="integer"),
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/SolicitudDeAdopcion")
+     *             ),
+     *             @OA\Property(property="last_page", type="integer"),
+     *             @OA\Property(property="per_page", type="integer"),
+     *             @OA\Property(property="total", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="No autorizado")
      * )
      */
     public function paginated(Request $request)
     {
-        $perPage = $request->input('per_page', 10); // Por defecto 10
-        $solicitudes = SolicitudDeAdopcion::paginate($perPage);
+        $perPage = 12;
+        $search = $request->input('search');
 
-        return response()->json($solicitudes, 200);
+        // Detectar si search es fecha en formato dd/mm/yyyy o dd-mm-yyyy para convertirla a yyyy-mm-dd
+        $fechaFormateada = null;
+        if ($search) {
+            if (preg_match('/^(\d{2})[\/\-](\d{2})[\/\-](\d{4})$/', $search, $matches)) {
+                $fechaFormateada = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+            }
+        }
+
+        $query = SolicitudDeAdopcion::with(['usuario', 'mascota'])
+            ->when($search, function ($q) use ($search, $fechaFormateada) {
+                $q->where(function ($subQuery) use ($search, $fechaFormateada) {
+                    $subQuery->whereHas('usuario', function ($q2) use ($search) {
+                        $q2->where('name', 'like', '%' . $search . '%');
+                    })
+                        ->orWhereHas('mascota', function ($q3) use ($search) {
+                            $q3->where('nombre', 'like', '%' . $search . '%');
+                        });
+
+                    // Si es fecha exacta transformada, buscar por fecha exacta
+                    if ($fechaFormateada) {
+                        $subQuery->orWhereDate('fecha_solicitud', $fechaFormateada);
+                    }
+
+                    // Además buscar en la fecha_solicitud si contiene el número o texto (como string)
+                    // Esto permite buscar por fragmentos como "16" dentro de la fecha (YYYY-MM-DD)
+                    $subQuery->orWhere('fecha_solicitud', 'like', '%' . $search . '%');
+
+                    // Buscar por estado parcialmente también
+                    $subQuery->orWhere('estado', 'like', '%' . $search . '%');
+                });
+            });
+
+        return response()->json($query->paginate($perPage), 200);
     }
+
+
+
 
 
     /**

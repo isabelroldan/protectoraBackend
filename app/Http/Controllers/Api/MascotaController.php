@@ -37,7 +37,7 @@ class MascotaController extends Controller
     /**
      * @OA\Get(
      *     path="/api/mascotas/paginadas",
-     *     summary="Obtener mascotas paginadas",
+     *     summary="Obtener mascotas paginadas con opción de búsqueda",
      *     tags={"Mascotas"},
      *     @OA\Parameter(
      *         name="page",
@@ -53,19 +53,46 @@ class MascotaController extends Controller
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Texto de búsqueda (nombre, especie, raza, estado o edad exacta)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Lista de mascotas paginada"
+     *         description="Lista de mascotas paginada y/o filtrada",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="current_page", type="integer"),
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Mascota")),
+     *             @OA\Property(property="last_page", type="integer"),
+     *             @OA\Property(property="per_page", type="integer"),
+     *             @OA\Property(property="total", type="integer")
+     *         )
      *     )
      * )
      */
     public function paginated(Request $request)
     {
-        $perPage = $request->get('per_page', 10); // Por defecto 10 por página
-        $mascotas = Mascota::paginate($perPage);
+        $perPage = 12;
+        $search = $request->get('search');
 
-        return response()->json($mascotas, 200);
+        $query = Mascota::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'like', "%$search%")
+                    ->orWhere('especie', 'like', "%$search%")
+                    ->orWhere('raza', 'like', "%$search%")
+                    ->orWhere('estado', 'like', "%$search%")
+                    ->orWhere('edad', $search); // edad exacta
+            });
+        }
+
+        return response()->json($query->paginate($perPage), 200);
     }
+
 
 
 

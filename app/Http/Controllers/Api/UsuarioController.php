@@ -32,8 +32,9 @@ class UsuarioController extends Controller
     /**
      * @OA\Get(
      *     path="/api/usuarios/paginados",
-     *     summary="Obtener usuarios paginados",
+     *     summary="Obtener usuarios paginados con opción de búsqueda",
      *     tags={"Usuarios"},
+     *     security={{"sanctum":{}}},
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
@@ -44,23 +45,70 @@ class UsuarioController extends Controller
      *     @OA\Parameter(
      *         name="per_page",
      *         in="query",
-     *         description="Cantidad de elementos por página",
+     *         description="Cantidad de usuarios por página",
      *         required=false,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Texto de búsqueda (nombre, email, dirección o teléfono)",
+     *         required=false,
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Lista paginada de usuarios"
+     *         description="Lista de usuarios paginada y/o filtrada",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="current_page", type="integer"),
+     *             @OA\Property(property="data", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="direccion", type="string"),
+     *                 @OA\Property(property="telefono", type="string"),
+     *                 @OA\Property(property="rol", type="string"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time")
+     *             )),
+     *             @OA\Property(property="last_page", type="integer"),
+     *             @OA\Property(property="per_page", type="integer"),
+     *             @OA\Property(property="total", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="No autenticado"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Acceso denegado (solo administradores)"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor"
      *     )
      * )
      */
     public function paginated(Request $request)
     {
-        $perPage = $request->input('per_page', 10); // Por defecto 10
-        $usuarios = User::paginate($perPage);
+        $perPage = 12;
+        $search = $request->get('search');
 
-        return response()->json($usuarios, 200);
+        $query = User::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('direccion', 'like', "%$search%")
+                    ->orWhere('telefono', 'like', "%$search%");
+            });
+        }
+
+        return response()->json($query->paginate($perPage), 200);
     }
+
 
 
     /**
