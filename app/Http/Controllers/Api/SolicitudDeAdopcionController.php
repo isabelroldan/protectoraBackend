@@ -118,6 +118,32 @@ class SolicitudDeAdopcionController extends Controller
     }
 
 
+    /**
+     * @OA\Get(
+     *     path="/api/mis-solicitudes",
+     *     tags={"Solicitudes de Adopción"},
+     *     summary="Obtener las solicitudes del usuario autenticado",
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de solicitudes del usuario autenticado"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="No autenticado"
+     *     )
+     * )
+     */
+    public function misSolicitudes(Request $request)
+    {
+        $usuario = $request->user();
+
+        $solicitudes = SolicitudDeAdopcion::with(['usuario', 'mascota'])
+            ->where('usuario_id', $usuario->id)
+            ->get();
+
+        return response()->json($solicitudes, 200);
+    }
 
 
 
