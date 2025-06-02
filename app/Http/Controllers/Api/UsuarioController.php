@@ -148,6 +148,7 @@ class UsuarioController extends Controller
             'password' => 'required|string',
             'direccion' => 'required|string',
             'telefono' => 'required|string',
+            'rol' => 'required|string|in:admin,usuario'
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -215,7 +216,8 @@ class UsuarioController extends Controller
      *             @OA\Property(property="email", type="string", example="juanactualizado@example.com"),
      *             @OA\Property(property="password", type="string", example="newpassword123"),
      *             @OA\Property(property="direccion", type="string", example="Calle Nueva 456"),
-     *             @OA\Property(property="telefono", type="string", example="987654321")
+     *             @OA\Property(property="telefono", type="string", example="987654321"),
+     *             @OA\Property(property="rol", type="string", example="admin")
      *         )
      *     ),
      *     @OA\Response(
@@ -241,6 +243,7 @@ class UsuarioController extends Controller
             'email' => "email|unique:users,email,$id",
             'direccion' => 'string',
             'telefono' => 'string',
+            'rol' => 'required|string|in:admin,usuario'
         ]);
 
         if ($request->filled('password')) {
